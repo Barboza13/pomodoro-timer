@@ -1,0 +1,13 @@
+<script setup lang="ts"></script>
+
+<template>
+  <section>
+    <div>
+      <h1>
+        <p>Hello World!</p>
+      </h1>
+    </div>
+  </section>
+</template>
+
+<style scoped></style>
