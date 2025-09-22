@@ -1,13 +1,13 @@
 :root {
   --default-background: #222;
   --primary-color: #6e005f;
-  --primary-color-hover: #630b57;
+  --primary-color-hover: #500946;
   --detail-color: #4b4b4b;
   --text-color: #e8dcca;
 }
 
 @font-face {
-  font-family: "Lato";
+  font-family: 'Lato';
   src: url(../fonts/Lato-Regular.ttf);
   font-weight: normal;
 }
@@ -16,5 +16,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Lato", 'Times New Roman';
+  font-family: 'Lato', sans-serif;
+}
+
+body {
+  background-color: var(--default-background);
+  color: var(--text-color);
 }
