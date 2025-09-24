@@ -7,10 +7,12 @@ const taskService = new TaskService()
 const tasks = ref<Task[]>([])
 
 export default function useTask() {
-  tasks.value = taskService.getTasks()
+  const loadTasks = (): void => {
+    tasks.value = taskService.getTasks()
+  }
 
-  const getTasks = (): Task[] => {
-    return tasks.value
+  const getTaskByIndex = (index: number): Task => {
+    return taskService.getTaskByIndex(index)
   }
 
   const refreshTasks = (): void => {
@@ -19,15 +21,26 @@ export default function useTask() {
 
   const addTask = (task: Task): void => {
     taskService.createTask(task)
+    refreshTasks()
   }
 
   const updateTask = (index: number, newTask: Task): void => {
     taskService.editTask(index, newTask)
+    refreshTasks()
   }
 
   const removeTask = (index: number): void => {
     taskService.deleteTask(index)
+    refreshTasks()
   }
 
-  return { getTasks, refreshTasks, addTask, updateTask, removeTask }
+  return {
+    tasks,
+    loadTasks,
+    getTaskByIndex,
+    refreshTasks,
+    addTask,
+    updateTask,
+    removeTask,
+  }
 }

@@ -4,17 +4,23 @@ import TaskItem from '@components/TaskItem.vue'
 import TaskForm from '@components/TaskForm.vue'
 import useTask from '@composables/useTask'
 
-import type { Task } from '@/types'
-
-const { getTasks } = useTask()
-const tasks = ref<Task[]>([])
+const { tasks, loadTasks } = useTask()
 const isShowTaskFormVisible = ref<boolean>(false)
+const isEditTaskForm = ref<boolean>(false)
+const taskIndex = ref<number>(-1)
 
 const toggleShowTaskForm = (): void => {
   isShowTaskFormVisible.value = !isShowTaskFormVisible.value
+  isEditTaskForm.value = false
 }
 
-onMounted(() => (tasks.value = getTasks()))
+const showTaskFormToEdit = (index: number): void => {
+  isEditTaskForm.value = true
+  taskIndex.value = index
+  isShowTaskFormVisible.value = true
+}
+
+onMounted(() => loadTasks())
 </script>
 
 <template>
@@ -32,13 +38,19 @@ onMounted(() => (tasks.value = getTasks()))
         v-for="(task, index) in tasks"
         :key="index"
         :title="task.title"
-        @toggle-show-task-form="toggleShowTaskForm"
+        :index
+        @show-task-form-to-edit="showTaskFormToEdit"
       />
     </article>
   </section>
   <teleport to="body">
     <div v-show="isShowTaskFormVisible" id="black-background"></div>
-    <TaskForm v-show="isShowTaskFormVisible" @toggle-show-task-form="toggleShowTaskForm" />
+    <TaskForm
+      v-if="isShowTaskFormVisible"
+      :is-edit="isEditTaskForm"
+      :task-index
+      @toggle-show-task-form="toggleShowTaskForm"
+    />
   </teleport>
 </template>
 
@@ -94,7 +106,7 @@ onMounted(() => (tasks.value = getTasks()))
     width: 100%;
     overflow-y: auto;
     gap: 0.3rem;
-    padding: 0 0.5rem;
+    padding: 0.5rem 0.5rem 0;
   }
 }
 

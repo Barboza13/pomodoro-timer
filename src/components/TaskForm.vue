@@ -1,19 +1,44 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import useTask from '@composables/useTask'
 
+const props = defineProps({
+  isEdit: {
+    type: Boolean,
+    required: true,
+  },
+  taskIndex: {
+    type: Number,
+    required: true,
+  },
+})
+
 const emits = defineEmits(['toggleShowTaskForm'])
-const { addTask, refreshTasks } = useTask()
+const { addTask, getTaskByIndex, updateTask } = useTask()
 const title = ref<string>('')
 const content = ref<string>('')
 
 const handleSubmitForm = (): void => {
+  if (props.isEdit) {
+    updateTask(props.taskIndex, { title: title.value, content: content.value })
+    title.value = ''
+    content.value = ''
+    return
+  }
+
   addTask({ title: title.value, content: content.value })
-  refreshTasks()
 
   title.value = ''
   content.value = ''
 }
+
+onMounted(() => {
+  if (props.isEdit) {
+    const task = getTaskByIndex(props.taskIndex)
+    title.value = task.title
+    content.value = task.content
+  }
+})
 </script>
 
 <template>
@@ -25,7 +50,7 @@ const handleSubmitForm = (): void => {
       @click="emits('toggleShowTaskForm')"
     />
     <form class="task-form" @submit.prevent="handleSubmitForm">
-      <p class="task-form-title">Create new Task</p>
+      <p class="task-form-title">{{ isEdit ? 'Update task' : 'Create new Task' }}</p>
       <input
         class="task-form-input"
         type="text"
@@ -42,7 +67,7 @@ const handleSubmitForm = (): void => {
         placeholder="Enter the content..."
         v-model="content"
       />
-      <button id="task-form-submit-button" type="submit">Save</button>
+      <button id="task-form-submit-button" type="submit">{{ isEdit ? 'Update' : 'Save' }}</button>
     </form>
   </section>
 </template>

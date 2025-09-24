@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
-import { IoClose } from 'oh-vue-icons/icons'
+import { IoClose, MdDelete } from 'oh-vue-icons/icons'
 import App from './App.vue'
 
-addIcons(IoClose)
+addIcons(IoClose, MdDelete)
 
 const app = createApp(App)
 app.component('v-icon', OhVueIcon)

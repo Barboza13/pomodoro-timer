@@ -6,16 +6,16 @@ export default class TaskService {
   private tasks: Task[] = []
 
   constructor() {
-    this.tasks = this.getTasksFromLocalStorage()
+    this.getTasksFromLocalStorage()
   }
 
   /**
    * Get tasks from local storage.
    *
-   * @returns {Task[]} Tasks.
+   * @returns {void} This method does not return a value.
    */
-  private getTasksFromLocalStorage(): Task[] {
-    return JSON.parse(localStorage.getItem(TASK_KEY) ?? '[]')
+  private getTasksFromLocalStorage(): void {
+    this.tasks = JSON.parse(localStorage.getItem(TASK_KEY) ?? '[]')
   }
 
   /**
@@ -55,6 +55,7 @@ export default class TaskService {
   public createTask(task: Task): string {
     this.tasks.unshift(task)
     this.saveToLocalStorage()
+    this.getTasksFromLocalStorage()
     return '¡Registro guardado exitosamente!'
   }
 
@@ -68,6 +69,7 @@ export default class TaskService {
   public editTask(index: number, task: Task): string {
     this.tasks.splice(index, 1, task)
     this.saveToLocalStorage()
+    this.getTasksFromLocalStorage()
     return '¡Registro actualizado exitosamente!'
   }
 
@@ -80,6 +82,7 @@ export default class TaskService {
   public deleteTask(taskIndex: number): string {
     this.tasks.splice(taskIndex, 1)
     this.saveToLocalStorage()
+    this.getTasksFromLocalStorage()
     return '¡Registro eliminado exitosamente!'
   }
 }
