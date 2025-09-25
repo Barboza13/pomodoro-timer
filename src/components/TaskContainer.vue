@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import TaskItem from '@components/TaskItem.vue'
 import TaskForm from '@components/TaskForm.vue'
 import useTask from '@composables/useTask'
+import ShowTaskForm from '@transitions/ShowTaskForm.vue'
 
 const { tasks, loadTasks } = useTask()
 const isShowTaskFormVisible = ref<boolean>(false)
@@ -45,12 +46,14 @@ onMounted(() => loadTasks())
   </section>
   <teleport to="body">
     <div v-show="isShowTaskFormVisible" id="black-background"></div>
-    <TaskForm
-      v-if="isShowTaskFormVisible"
-      :is-edit="isEditTaskForm"
-      :task-index
-      @toggle-show-task-form="toggleShowTaskForm"
-    />
+    <ShowTaskForm>
+      <TaskForm
+        v-if="isShowTaskFormVisible"
+        :is-edit="isEditTaskForm"
+        :task-index
+        @toggle-show-task-form="toggleShowTaskForm"
+      />
+    </ShowTaskForm>
   </teleport>
 </template>
 

@@ -11,7 +11,8 @@
       "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"],
       "@composables/*": ["./src/composables/*"],
-      "@services/*": ["./src/services/*"]
+      "@services/*": ["./src/services/*"],
+      "@transitions/*": ["./src/transitions/*"]
     }
   }
 }

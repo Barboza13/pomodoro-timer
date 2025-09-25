@@ -15,6 +15,7 @@ export default defineConfig({
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
       '@composables': fileURLToPath(new URL('./src/composables', import.meta.url)),
       '@services': fileURLToPath(new URL('./src/services', import.meta.url)),
+      '@transitions': fileURLToPath(new URL('./src/transitions', import.meta.url)),
     },
   },
 })
