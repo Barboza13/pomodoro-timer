@@ -1,24 +1,46 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useCountdown from '@composables/useCountdown'
+import { ref } from 'vue'
+
+const time = ref<number>(25)
+const {
+  countdown,
+  isPaused,
+  isRunning,
+  isFinished,
+  initCountdown,
+  pauseCountdown,
+  resumeCountdown,
+  restartCountdown,
+  addMinutes,
+} = useCountdown(time)
+
+const changeTime = (newTime: number): void => {
+  time.value = newTime
+}
+</script>
 
 <template>
   <section class="timer-container">
     <article class="period-container">
-      <button class="period-container-button">Focus</button>
-      <button class="period-container-button">Short Break</button>
-      <button class="period-container-button">Long Break</button>
+      <button class="period-container-button" @click="changeTime(25)">Focus</button>
+      <button class="period-container-button" @click="changeTime(5)">Short Break</button>
+      <button class="period-container-button" @click="changeTime(15)">Long Break</button>
     </article>
     <article class="stopwatch-container">
-      <p id="stopwatch">00:00</p>
+      <p id="stopwatch">{{ countdown }}</p>
       <div class="stopwatch-controller-container">
-        <button id="stopwatch-pause">Pause</button>
-        <button id="stopwatch-start">Start</button>
+        <button v-if="isPaused" id="stopwatch-pause" @click="resumeCountdown">Resume</button>
+        <button v-else-if="isRunning" id="stopwatch-pause" @click="pauseCountdown">Pause</button>
+        <button v-if="isFinished" id="stopwatch-start" @click="initCountdown">Start</button>
+        <button v-else id="stopwatch-start" @click="restartCountdown">Restart</button>
       </div>
     </article>
     <article class="increment-stopwatch-container">
-      <button class="increment-stopwatch-container-button">+ 25min.</button
-      ><button class="increment-stopwatch-container-button">+ 10min.</button
-      ><button class="increment-stopwatch-container-button">+ 5min.</button
-      ><button class="increment-stopwatch-container-button">+ 1min.</button>
+      <button class="increment-stopwatch-container-button" @click="addMinutes(25)">+ 25min</button>
+      <button class="increment-stopwatch-container-button" @click="addMinutes(20)">+ 10min</button>
+      <button class="increment-stopwatch-container-button" @click="addMinutes(5)">+ 5min</button>
+      <button class="increment-stopwatch-container-button" @click="addMinutes(1)">+ 1min</button>
     </article>
   </section>
 </template>
@@ -48,12 +70,13 @@
       background-color: transparent;
       color: var(--text-color);
       border: none;
+      border-radius: 5px;
       cursor: pointer;
-      padding: 0.3rem 0.3rem;
+      padding: 0.5rem 0.5rem;
 
       &:hover {
         background-color: var(--detail-color);
-        transition: all 75ms ease;
+        transition: all 200ms ease;
       }
     }
   }
@@ -68,7 +91,7 @@
 
     & .stopwatch-controller-container {
       display: flex;
-      justify-content: space-between;
+      justify-content: end;
       align-items: center;
       gap: 1rem;
       height: 3rem;
@@ -119,14 +142,14 @@
       justify-content: center;
       align-items: center;
       background-color: transparent;
-      color: var(--text-color);
+      color: var(--detail-color);
       border: none;
       cursor: pointer;
       padding: 0.3rem 0.3rem;
 
       &:hover {
-        background-color: var(--detail-color);
-        transition: all 75ms ease;
+        color: var(--text-color);
+        transition: all 200ms ease;
       }
     }
   }
