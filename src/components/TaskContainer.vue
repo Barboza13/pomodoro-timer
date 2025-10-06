@@ -9,6 +9,17 @@ const { tasks, loadTasks } = useTask()
 const isShowTaskFormVisible = ref<boolean>(false)
 const isEditTaskForm = ref<boolean>(false)
 const taskIndex = ref<number>(-1)
+const selectedTaskIndex = ref<number | null>(null)
+
+const handleSelectTask = (index: number): void => {
+  // Deselect the current task.
+  if (selectedTaskIndex.value === index) {
+    selectedTaskIndex.value = null
+    return
+  }
+
+  selectedTaskIndex.value = index
+}
 
 const toggleShowTaskForm = (): void => {
   isShowTaskFormVisible.value = !isShowTaskFormVisible.value
@@ -38,9 +49,11 @@ onMounted(() => loadTasks())
       <TaskItem
         v-for="(task, index) in tasks"
         :key="index"
-        :title="task.title"
+        :task
         :index
+        :selected-task-index
         @show-task-form-to-edit="showTaskFormToEdit"
+        @handle-select-task="handleSelectTask"
       />
     </article>
   </section>
@@ -86,6 +99,7 @@ onMounted(() => loadTasks())
 
     & #new-task-button {
       text-align: center;
+      font-size: 1.5rem;
       height: 2rem;
       width: 2rem;
       background-color: transparent;

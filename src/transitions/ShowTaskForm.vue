@@ -19,6 +19,6 @@
 .show-task-form-leave-from,
 .show-task-form-enter-to {
   opacity: 1;
-  scale: 1.15;
+  scale: 1;
 }
 </style>
