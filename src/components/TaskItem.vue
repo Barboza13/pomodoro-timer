@@ -4,6 +4,7 @@ import useTask from '@composables/useTask'
 
 import type { PropType } from 'vue'
 import type { Task } from '@/types'
+import { TaskStatus } from '@/types'
 
 const props = defineProps({
   task: {
@@ -39,6 +40,13 @@ const toggleSelectedTask = (): void => emits('handleSelectTask', props.index)
         :checked="isSelected"
         @click.stop="toggleSelectedTask"
       />
+      <div
+        :class="[
+          task.status === TaskStatus.completed
+            ? 'status-indicator-completed'
+            : 'status-indicator-incomplete',
+        ]"
+      ></div>
       <p>
         {{ task.title }}
       </p>
@@ -57,6 +65,7 @@ const toggleSelectedTask = (): void => emits('handleSelectTask', props.index)
   height: 2.5rem;
   width: 100%;
   background-color: transparent;
+  transition-delay: 140ms; /* Transition applied when moving the cursor away */
   cursor: pointer;
   border-radius: 5px;
   padding: 0 0.5rem;
@@ -64,51 +73,7 @@ const toggleSelectedTask = (): void => emits('handleSelectTask', props.index)
 
   &:hover {
     background-color: var(--detail-color);
-  }
-
-  & #current-task-button {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 38px;
-    height: 18px;
-    background-color: #ccc;
-    border-radius: 24px;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    outline: none;
-    border: none;
-
-    /*  Inner circle  */
-    &::before {
-      content: '';
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background-color: white;
-      top: 2px;
-      left: 2px;
-      transition: transform 0.3s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    &:checked {
-      background-color: #4caf50;
-    }
-
-    &:checked::before {
-      transform: translateX(20px);
-    }
-
-    &:hover {
-      opacity: 0.8;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
-    }
+    transition: background-color 75ms linear;
   }
 
   & .task-item-data-container {
@@ -116,6 +81,65 @@ const toggleSelectedTask = (): void => emits('handleSelectTask', props.index)
     justify-content: center;
     align-items: center;
     gap: 0.8rem;
+
+    & #current-task-button {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 38px;
+      height: 18px;
+      background-color: #ccc;
+      border-radius: 24px;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      outline: none;
+      border: none;
+
+      /*  Inner circle  */
+      &::before {
+        content: '';
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: white;
+        top: 2px;
+        left: 2px;
+        transition: transform 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      &:checked {
+        background-color: #4caf50;
+      }
+
+      &:checked::before {
+        transform: translateX(20px);
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+      }
+    }
+
+    & .status-indicator-completed {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: green;
+    }
+
+    & .status-indicator-incomplete {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: var(--detail-color);
+    }
   }
 
   & #delete-task-button {

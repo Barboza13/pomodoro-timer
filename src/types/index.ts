@@ -1,4 +1,4 @@
-export enum taskStatus {
+export enum TaskStatus {
   incompleted = 0,
   completed = 1,
 }
@@ -6,5 +6,5 @@ export enum taskStatus {
 export interface Task {
   title: string
   content: string
-  status: taskStatus
+  status: TaskStatus
 }

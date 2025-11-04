@@ -1,6 +1,10 @@
 import { ref, watch, computed, onUnmounted } from 'vue'
+import useTask from '@composables/useTask'
 
 import type { Ref } from 'vue'
+import { TaskStatus } from '@/types'
+
+const { updateTask, getTaskByIndex, getSelectedTaskIndex } = useTask()
 
 export default function useCountdown(timeRef: Ref<number>) {
   const minutes = ref<number>(timeRef.value)
@@ -70,6 +74,12 @@ export default function useCountdown(timeRef: Ref<number>) {
         isRunning.value = false
         isFinished.value = true
         clearCountdownInterval()
+
+        const taskIndex = getSelectedTaskIndex()
+        if (taskIndex != null) {
+          const task = getTaskByIndex(taskIndex)
+          updateTask(taskIndex, { ...task, status: TaskStatus.completed })
+        }
       }
     }, 1000)
   }

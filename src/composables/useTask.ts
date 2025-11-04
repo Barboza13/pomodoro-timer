@@ -5,6 +5,7 @@ import type { Task } from '@/types'
 
 const taskService = new TaskService()
 const tasks = ref<Task[]>([])
+const selectedTaskIndex = ref<number | null>(null)
 
 export default function useTask() {
   const loadTasks = (): void => {
@@ -34,6 +35,14 @@ export default function useTask() {
     refreshTasks()
   }
 
+  const setSelectedTaskIndex = (index: number): void => {
+    selectedTaskIndex.value = index
+  }
+
+  const getSelectedTaskIndex = (): number | null => {
+    return selectedTaskIndex.value
+  }
+
   return {
     tasks,
     loadTasks,
@@ -42,5 +51,7 @@ export default function useTask() {
     addTask,
     updateTask,
     removeTask,
+    setSelectedTaskIndex,
+    getSelectedTaskIndex,
   }
 }

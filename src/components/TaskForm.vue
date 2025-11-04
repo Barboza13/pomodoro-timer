@@ -2,6 +2,8 @@
 import { onMounted, ref } from 'vue'
 import useTask from '@composables/useTask'
 
+import { TaskStatus } from '@/types'
+
 const props = defineProps({
   isEdit: {
     type: Boolean,
@@ -14,19 +16,24 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['toggleShowTaskForm'])
+
 const { addTask, getTaskByIndex, updateTask } = useTask()
 const title = ref<string>('')
 const content = ref<string>('')
 
 const handleSubmitForm = (): void => {
   if (props.isEdit) {
-    updateTask(props.taskIndex, { title: title.value, content: content.value })
+    updateTask(props.taskIndex, {
+      title: title.value,
+      content: content.value,
+      status: TaskStatus.incompleted,
+    })
     title.value = ''
     content.value = ''
     return
   }
 
-  addTask({ title: title.value, content: content.value })
+  addTask({ title: title.value, content: content.value, status: TaskStatus.incompleted })
 
   title.value = ''
   content.value = ''

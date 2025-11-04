@@ -5,7 +5,7 @@ import TaskForm from '@components/TaskForm.vue'
 import useTask from '@composables/useTask'
 import ShowTaskForm from '@transitions/ShowTaskForm.vue'
 
-const { tasks, loadTasks } = useTask()
+const { tasks, loadTasks, setSelectedTaskIndex } = useTask()
 const isShowTaskFormVisible = ref<boolean>(false)
 const isEditTaskForm = ref<boolean>(false)
 const taskIndex = ref<number>(-1)
@@ -19,6 +19,7 @@ const handleSelectTask = (index: number): void => {
   }
 
   selectedTaskIndex.value = index
+  setSelectedTaskIndex(index)
 }
 
 const toggleShowTaskForm = (): void => {
