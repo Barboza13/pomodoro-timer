@@ -79,6 +79,7 @@ onMounted(() => loadTasks())
   width: 50%;
   border: 1px solid var(--detail-color);
   border-radius: 5px;
+  overflow: hidden;
 
   & .title-container {
     display: flex;
@@ -88,15 +89,17 @@ onMounted(() => loadTasks())
     width: 100%;
     padding: 0 0.5rem;
     font-size: 18px;
+    flex-shrink: 0;
   }
 
   & .new-task-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 2rem;
+    height: 3rem;
     width: 100%;
     padding: 0 0.5rem;
+    flex-shrink: 0;
 
     & #new-task-button {
       text-align: center;
@@ -119,12 +122,40 @@ onMounted(() => loadTasks())
   & .task-list-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    flex: 1;
+    min-height: 0;
     width: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     gap: 0.3rem;
     padding: 0.5rem 0.5rem 0;
+
+    /* Estilos personalizados del scrollbar */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--detail-color);
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--text-color);
+      opacity: 0.8;
+    }
+  }
+}
+
+@media (max-width: 1020px) {
+  .task-container {
+    width: 100%;
   }
 }
 

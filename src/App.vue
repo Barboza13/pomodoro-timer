@@ -21,6 +21,15 @@ import TimerContainer from '@components/TimerContainer.vue'
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  translate: -50% -50%;
+}
+
+@media (max-width: 1020px) {
+  .main-container {
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    padding: 1rem;
+  }
 }
 </style>

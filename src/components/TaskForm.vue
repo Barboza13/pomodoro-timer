@@ -154,4 +154,10 @@ onMounted(() => {
     }
   }
 }
+
+@media (max-width: 424px) {
+  .task-form-container {
+    width: 350px;
+  }
+}
 </style>

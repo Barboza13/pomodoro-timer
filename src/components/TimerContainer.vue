@@ -82,7 +82,12 @@ const changeTime = (newTime: number): void => {
   }
 
   & .stopwatch-container {
-    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
 
     & #stopwatch {
       text-align: center;
@@ -95,7 +100,7 @@ const changeTime = (newTime: number): void => {
       align-items: center;
       gap: 1rem;
       height: 3rem;
-      width: 100%;
+      width: 50%;
 
       & #stopwatch-pause {
         text-align: center;
@@ -152,6 +157,12 @@ const changeTime = (newTime: number): void => {
         transition: all 200ms ease;
       }
     }
+  }
+}
+
+@media (max-width: 1020px) {
+  .timer-container {
+    width: 100%;
   }
 }
 </style>
