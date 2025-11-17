@@ -1,39 +1,23 @@
-# pomodoro-timer
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-pnpm install
+This is a pomodoro timer, the idea comes from the roadmap.sh page.  
+Roadmap.sh project URL: https://roadmap.sh/projects/pomodoro-timer
+## Sumary
+To complete a task, simply select it and start the timer. Once the timer finishes, the task will be marked as complete.  
+You can increase the time, adjust the timer to take a short or long break.  
+You can delete or edit a existing task.
+## Technologies used
+- Vue.js + typescript.
+- HTML (HyperText Markup Language).
+- CSS (Cascading Style Sheets).
+## About the project
+- This project is a SPA (Single Page Application).
+- Use composables for state management.
+- Use the container-presenter design pattern.
+## Installation
+Download or copy this repository to your local directory and run the following command to download all dependencies.
+```.sh
+npm install
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
+To run this project execute the following command:
+```.sh
+npm run dev
 ```
